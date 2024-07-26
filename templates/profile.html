@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль пользователя</title>
+    <link type='text/css' href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet" />
+</head>
+<body>
+    <div class="profile-info">
+        <h1 style="font-size: 40pt;">Данные пользователя</h1>
+        <p>Имя: {{ username }}</p>
+        <p>Email: {{ email }}</p>
+    </div>
+    <div class="invite-form">
+        <h2>Создать пару</h2>
+        <form action="#">
+            <input type="text" placeholder="Введите id вашего друга" required>
+            <button type="submit">Отправить приглашение</button>
+        </form>
+    </div>
+    <div class="invitations">
+        <h2>Приглашения от ваших друзей</h2>
+        <p>У вас нет новых приглашений</p+>
+        <p>Приглашение в пару от пользователя JustMax <button class="button-access">Принять</button> <button class="button-cancle">Отклонить</button></p>
+    </div>
+    <a href="{{ url_for('login') }}" class="logout-button">Выход</a>
+</body>
+</html>
