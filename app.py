@@ -14,14 +14,6 @@ DEBUG = True
 SECRET_KEY = 'fljahglahlvfdvln.n.xbvrea;ih3#5434343!'
 
 
-
-#Конфигурация
-DATABASE = '/tmp/flsite.py'
-DEBUG = True
-SECRET_KEY = 'fljahglahlvfdvln.n.xbvrea;ih3#5434343!'
-
-
-
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'friends.db')))
