@@ -11,6 +11,7 @@
         <h1 style="font-size: 40pt;">Данные пользователя</h1>
         <p>Имя: {{ username }}</p>
         <p>Email: {{ email }}</p>
+        <p>Ваш ID: {{ user_id }}</p>
     </div>
     <div class="invite-form">
         <h2>Создать пару</h2>
@@ -24,6 +25,6 @@
         <p>У вас нет новых приглашений</p+>
         <p>Приглашение в пару от пользователя JustMax <button class="button-access">Принять</button> <button class="button-cancle">Отклонить</button></p>
     </div>
-    <a href="{{ url_for('login') }}" class="logout-button">Выход</a>
+    <a href="{{ url_for('logout') }}" class="logout-button">Выход</a>
 </body>
 </html>

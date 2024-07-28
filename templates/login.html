@@ -10,14 +10,17 @@
     <div class="centered-content">
         <div class="center-block">
             <h1>Вход</h1>
-            <form action="#">
+            {% for cat, msg in get_flashed_messages(True) %}
+            <div class="flash {{cat}}">{{msg}}</div>
+            {% endfor %}
+            <form action="#" method='post'>
                 <label for="email">Почта</label>
                 <input type="email" id="email" name="email" required>
                 <label for="password">Пароль</label>
                 <input type="password" id="password" name="password" required>
                 <button type="submit">Войти</button>
             </form>
-            <p>Нет аккаунта?<br> <a href="{{ url_for('register') }}">Нажмите: зарегистрироваться</a></p>
+            <p>Нет аккаунта?<a href="{{ url_for('register') }}">Зарегистрироваться</a></p>
         </div>
     </div>
 </body>

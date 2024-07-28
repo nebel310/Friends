@@ -1,19 +1,40 @@
 import sqlite3
 import os
 import random as rn
-from flask import Flask, render_template, request, session, abort
+from flask import Flask, render_template, request, g, flash, abort, redirect, url_for, session
+from DataBase import DataBase
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from UserLogin import UserLogin
+
+
+#Конфигурация
+DATABASE = '/tmp/app.py'
+DEBUG = True
+SECRET_KEY = 'fljahglahlvfdvln.n.xbvrea;ih3#5434343!'
 
 
 
 #Конфигурация
-DATABASE = 'tmp/friends.db'
+DATABASE = '/tmp/flsite.py'
 DEBUG = True
-SECRET_KEY = 'djf^*#gbjkhd/fbg545jdf$!@ghO;b;9354m,64$$'
+SECRET_KEY = 'fljahglahlvfdvln.n.xbvrea;ih3#5434343!'
+
+
 
 app = Flask(__name__)
 app.config.from_object(__name__)
-
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'friends.db')))
+
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message = 'Войдите в аккаунт для доступа к закрытым страницам'
+
+@login_manager.user_loader
+def load_user(user_id):
+    print('load_user')
+    return UserLogin().fromDB(user_id, dbase)
+
 
 def connect_db():
     conn = sqlite3.connect(app.config['DATABASE'])
@@ -27,6 +48,27 @@ def create_db():
         db.cursor().executescript(f.read())
     db.commit()
     db.close()
+
+
+def get_db():
+    if not hasattr(g, 'link_db'):
+        g.link_db = connect_db()
+    
+    return g.link_db
+
+
+dbase = None
+@app.before_request
+def before_request():
+    global dbase
+    db = get_db()
+    dbase = DataBase(db)
+
+
+@app.teardown_appcontext
+def close_db(error):
+    if hasattr(g, 'link_db'):
+        g.link_db.close()
 
 
 Activities = [
@@ -59,6 +101,7 @@ def index():
 
 
 @app.route('/game', methods=['GET', 'POST'])
+@login_required
 def game():
     activity = None
     if request.method == 'POST':
@@ -66,23 +109,56 @@ def game():
     return render_template('game.html', title='Friends', activity=activity)
 
 
-@app.route('/register')
+@app.route('/register', methods=['POST', 'GET'])
 def register():
+    if request.method == 'POST':
+        if len(request.form['username']) > 4 and len(request.form['email']) > 4 \
+            and len(request.form['password']) > 4:
+            hash = generate_password_hash(request.form['password'])
+            res = dbase.addUser(request.form['username'], request.form['email'], hash)
+            if res:
+                return redirect(url_for('login'))
+            else:
+                flash('Ошибка в регистрации', 'error')
+        else:
+            flash('Неверно заполнены поля', 'error')
+
     return render_template('register.html', title='Регистрация')
 
 
 @app.route('/login', methods=['POST', 'GET'])
-def login():   
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('profile'))
+    
+    if request.method == 'POST':
+        user = dbase.getUserByEmail(request.form['email'])
+        if user and check_password_hash(user['password'], request.form['password']):
+            userlogin = UserLogin().create(user)
+            rm = True if request.form.get('remainme') else False
+            login_user(userlogin, remember=rm)
+            return redirect(url_for('profile'))
+        
+        flash('Неверная пара логин/пароль', 'error')
+    
     return render_template('login.html', title='Авторизация')
 
 
-@app.route('/profile/<username>')
-def profile(username):
-    session['userLogged'] = 'adm'
-    if 'userLogged' not in session or session['userLogged'] != username:
-        abort(401)
-    
-    return render_template('profile.html', username=username, email='adm@adm.com')
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Вы вышли из аккаунта')
+    return redirect(url_for('login'))
+
+
+@app.route('/profile')
+@login_required
+def profile():
+    user_id = current_user.get_id()
+    username = dbase.getUserName(user_id)
+    email = dbase.getUserEmail(user_id)
+    return render_template('profile.html', username=username, email=email, user_id=user_id)
 
 
 @app.errorhandler(404)

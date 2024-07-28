@@ -10,16 +10,19 @@
     <div class="centered-content">
         <div class="center-block">
             <h1>Регистрация</h1>
-            <form action="#">
-                <label for="username">Имя пользователя</label>
-                <input type="text" id="username" name="username" required>
+            {% for cat, msg in get_flashed_messages(True) %}
+            <div class="flash {{cat}}">{{msg}}</div>
+            {% endfor %}
+            <form action="#" method="post">
                 <label for="email">Почта</label>
                 <input type="email" id="email" name="email" required>
+                <label for="username">Имя пользователя</label>
+                <input type="text" id="username" name="username" required>
                 <label for="password">Пароль</label>
                 <input type="password" id="password" name="password" required>
                 <button type="submit">Регистрация</button>
             </form>
-            <p>Уже регистрировались? <a href="{{ url_for('login') }}">Нажмите: войти</a></p>
+            <p>Уже регистрировались? <a href="{{ url_for('login') }}">Войти</a></p>
         </div>
     </div>
 </body>
