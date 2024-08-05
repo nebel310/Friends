@@ -144,12 +144,22 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['POST', 'GET'])
 @login_required
 def profile():
     user_id = current_user.get_id()
     username = dbase.getUserName(user_id)
     email = dbase.getUserEmail(user_id)
+    
+    if request.method == 'POST':
+        friend_id = request.form['friend_id']
+        print('Friend-id', friend_id)
+        if not friend_id == user_id:
+            dbase.addRequest(user_id, friend_id)
+            flash('Запрос другу отправлен', 'success')
+        else:
+            flash('Нельзя отправить запрос самому себе', 'error')
+    
     return render_template('profile.html', username=username, email=email, user_id=user_id)
 
 

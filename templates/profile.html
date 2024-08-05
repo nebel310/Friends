@@ -15,8 +15,11 @@
     </div>
     <div class="invite-form">
         <h2>Создать пару</h2>
-        <form action="#">
-            <input type="text" placeholder="Введите id вашего друга" required>
+        {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{cat}}">{{msg}}</div>
+        {% endfor %}
+        <form action="#" method='post'>
+            <input type="text" name='friend_id' placeholder="Введите ID вашего друга" required>
             <button type="submit">Отправить приглашение</button>
         </form>
     </div>

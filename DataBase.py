@@ -56,13 +56,33 @@ class DataBase:
             print('Ошибка во входе пользователя'+str(e))
     
     def getUserName(self, user_id):
-        user = self.getUser(user_id)
-        if user:
-            return user['name']
-        return None
+        try:
+            user = self.getUser(user_id)
+            if user:
+                return user['name']
+            return None
+        except sqlite3.Error as e:
+            print('Ошибка в функции getUserName'+str(e))
     
     def getUserEmail(self, user_id):
         user = self.getUser(user_id)
         if user:
             return user['email']
         return None
+
+    def addRequest(self, user_id, friend_id):
+        try:
+            self.__cur.execute(f'SELECT COUNT() as "count" FROM users WHERE id LIKE "{friend_id}"')
+            res = self.__cur.fetchone()
+            if res['count'] == 0:
+                print('Пользователя с таким ID не существует')
+                return False
+            
+            tm = math.floor(time.time())
+            self.__cur.execute('INSERT INTO requests VALUES(NULL, ?, ?, ?)', (user_id, friend_id, tm))
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print('Ошибка создания инвайта'+str(e))
+            return False
+        
+        return True
