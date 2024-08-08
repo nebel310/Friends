@@ -160,6 +160,8 @@ def profile():
         else:
             flash('Нельзя отправить запрос самому себе', 'error')
     
+    
+    
     return render_template('profile.html', username=username, email=email, user_id=user_id)
 
 

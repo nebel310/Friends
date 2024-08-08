@@ -86,3 +86,17 @@ class DataBase:
             return False
         
         return True
+    
+    def getRequest(self, user_id):
+        try:
+            self.__cur.execute(f'SELECT * FROM requests WHERE friend_id = "{user_id}"')
+            res = self.__cur.fetchone()
+            if not res:
+                print('Запрос не найден')
+                return False
+            
+            return res
+        except sqlite3.Error as e:
+            print('Ошибка в получении запроса'+str(e))
+            
+        return False
