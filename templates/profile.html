@@ -20,14 +20,25 @@
         {% endfor %}
         <form action="#" method='post'>
             <input type="text" name='friend_id' placeholder="Введите ID вашего друга" required>
-            <button type="submit">Отправить приглашение</button>
+            <button type="submit" name="create_request">Отправить приглашение</button>
         </form>
     </div>
     <div class="invitations">
         <h2>Приглашения от ваших друзей</h2>
-        <p>У вас нет новых приглашений</p>
         <ul>
-            <p>Приглашение в пару от пользователя JustMax <button class="button-access">Принять</button> <button class="button-cancle">Отклонить</button></p>
+            {% if invites == False %}
+            <p> У вас нет новых приглашений </p>
+            {% else %}
+            {% for invite in invites %}
+            <form method="post" style="display: grid;">
+                <p>
+                    Приглашение от пользователя: {{ invite[1] }}
+                    <button type="submit" class="button-access" name="request_interract" value="accept_{{ invite[0] }}">Принять</button>
+                    <button type="submit" class="button-cancle" name="request_interract" value="decline_{{ invite[0] }}">Отклонить</button>
+                </p>
+            </form>
+            {% endfor %}
+            {% endif %}
         </ul>
     </div>
     <a href="{{ url_for('logout') }}" class="logout-button">Выход</a>

@@ -12,3 +12,10 @@ CREATE TABLE IF NOT EXISTS requests (
     friend_id text NOT NULL,
     time integer NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS couples (
+    id integer PRIMARY KEY AUTOINCREMENT,
+    user1 text NOT NULL,
+    user2 text NOT NULL,
+    time integer NOT NULL
+);
