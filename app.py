@@ -148,78 +148,37 @@ def logout():
 @login_required
 def profile():
     user_id = current_user.get_id()
-    username = dbase.getUser(user_id)[1]
+    user_name = dbase.getUser(user_id)[1]
     email = dbase.getUser(user_id)[2]
     
     if request.method == 'POST':
-        create_request = request.form.get('create_request')
-        request_interract = request.form.get('request_interract')
-        if create_request:
+        if 'create_request' in request.form:
             friend_id = request.form.get('friend_id')
-            print('Friend-id', friend_id)
             if not friend_id == user_id:
-                dbase.addRequest(user_id, friend_id)
+                dbase.addRequest(user_id, friend_id, user_name)
                 flash('Запрос другу отправлен', 'success')
             else:
                 flash('Нельзя отправить запрос самому себе', 'error')
         
-        
-        elif request_interract:
+        elif 'request_interract' in request.form:
+            request_interract = request.form.get('request_interract')
             interract_type, request_id = request_interract.split('_')
             request_id = int(request_id)
-            print(request_id)
 
             if interract_type == 'accept':
                 if dbase.getRequestByID(request_id) != False:
                     user1 = dbase.getRequestByID(request_id)[1]
                     user2 = dbase.getRequestByID(request_id)[2]
-                    print(user1, user2)
+
                     dbase.addCouple(user1, user2)
                     dbase.delRequest(request_id)
             elif interract_type == 'decline':
                 dbase.delRequest(request_id)
     
-    invites = dbase.getRequest(user_id)
-    if invites != False:
-        names = []
-        for invite in invites:
-            friend_name = dbase.getUser(invite[1])
-            names.append(friend_name)
-    else:
-        names = False
-        
-    
-    if request.method == 'POST':
-        request_interract = request.form.get('request_interract')
-        if request_interract:
-            interract_type, request_id = request_interract.split('_')
-            request_id = int(request_id)
-            print(request_id)
-
-            if interract_type == 'accept':
-                if dbase.getRequestByID(request_id) != False:
-                    user1 = dbase.getRequestByID(request_id)[1]
-                    user2 = dbase.getRequestByID(request_id)[2]
-                    print(user1, user2)
-                    dbase.addCouple(user1, user2)
-                    dbase.delRequest(request_id)
-            elif interract_type == 'decline':
-                dbase.delRequest(request_id)
+    requests = dbase.getRequest(user_id)   
 
     
-    return render_template('profile.html', username=username, email=email, user_id=user_id, invites=names)
-
-
-@app.route('/prinat')
-@login_required
-def prinat():
-    return redirect('profile')
-
-
-@app.route('/otkaz')
-@login_required
-def otkaz():
-    return redirect('profile')
+    return render_template('profile.html', username=user_name, email=email, user_id=user_id, requests=requests)
 
 
 @app.errorhandler(404)

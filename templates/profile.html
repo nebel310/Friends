@@ -26,15 +26,15 @@
     <div class="invitations">
         <h2>Приглашения от ваших друзей</h2>
         <ul>
-            {% if invites == False %}
+            {% if requests == False %}
             <p> У вас нет новых приглашений </p>
             {% else %}
-            {% for invite in invites %}
+            {% for request in requests %}
             <form method="post" style="display: grid;">
                 <p>
-                    Приглашение от пользователя: {{ invite[1] }}
-                    <button type="submit" class="button-access" name="request_interract" value="accept_{{ invite[0] }}">Принять</button>
-                    <button type="submit" class="button-cancle" name="request_interract" value="decline_{{ invite[0] }}">Отклонить</button>
+                    Приглашение от пользователя: {{ request[3] }}
+                    <button type="submit" class="button-access" name="request_interract" value="accept_{{ request[0] }}">Принять</button>
+                    <button type="submit" class="button-cancle" name="request_interract" value="decline_{{ request[0] }}">Отклонить</button>
                 </p>
             </form>
             {% endfor %}

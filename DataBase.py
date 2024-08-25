@@ -57,7 +57,7 @@ class DataBase:
             print('Ошибка во входе пользователя getUserByEmail'+str(e))
 
     #Работа с запросами
-    def addRequest(self, user_id, friend_id):
+    def addRequest(self, user_id, friend_id, user_name):
         try:
             self.__cur.execute(f'SELECT COUNT() as "count" FROM users WHERE id LIKE "{friend_id}"')
             res = self.__cur.fetchone()
@@ -67,7 +67,7 @@ class DataBase:
                 return False
             
             tm = math.floor(time.time())
-            self.__cur.execute('INSERT INTO requests VALUES(NULL, ?, ?, ?)', (user_id, friend_id, tm))
+            self.__cur.execute('INSERT INTO requests VALUES(NULL, ?, ?, ?, ?)', (user_id, friend_id, user_name, tm))
             self.__db.commit()
         except sqlite3.Error as e:
             print('Ошибка создания инвайта'+str(e))
@@ -94,7 +94,7 @@ class DataBase:
             self.__cur.execute(f'SELECT * FROM requests WHERE id = {request_id}')
             res = self.__cur.fetchone()
             if not res:
-                print('Запрос не найден')
+                print('Запрос не найден getreqByID')
                 return False
             
             return res

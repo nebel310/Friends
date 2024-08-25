@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS requests (
     id integer PRIMARY KEY AUTOINCREMENT,
     user_id text NOT NULL,
     friend_id text NOT NULL,
+    user_name text NOT NULL,
     time integer NOT NULL
 );
 
