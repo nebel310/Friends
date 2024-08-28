@@ -118,7 +118,7 @@ class DataBase:
             print('Ошибка в удалении запроса'+str(e))
     
     #Работа с парами
-    def addCouple(self, user1, user2):
+    def addCouple(self, user1, user2, name1, name2):
         try:
             self.__cur.execute(f'SELECT COUNT() as "count" FROM couples WHERE (user1 LIKE "{user1}" AND user2 LIKE "{user2}") OR (user1 LIKE "{user2}" AND user2 LIKE "{user1}")')
             res = self.__cur.fetchone()
@@ -126,11 +126,24 @@ class DataBase:
                 print('Пара с таким набором ID пользователей уже существует')
                 return False
             
+            
             tm = math.floor(time.time())
-            self.__cur.execute('INSERT INTO couples VALUES(NULL, ?, ?, ?)', (user1, user2, tm))
+            self.__cur.execute('INSERT INTO couples VALUES(NULL, ?, ?, ?, ?, ?)', (user1, user2, name1, name2, tm))
             self.__db.commit()
         except sqlite3.Error as e:
             print('Ошибка создания пары'+str(e))
             return False
         
         return True
+    
+    def getCouple(self, user_id):
+        try:
+            self.__cur.execute(f'SELECT * FROM couples WHERE user1 LIKE "{user_id}" OR user2 LIKE "{user_id}"')
+            res = self.__cur.fetchall()
+            if not res:
+                print('Пары с таким user_id не существует getCouple')
+                return False
+            
+            return res
+        except sqlite3.Error as e:
+            print('Ошибка в getCouple'+str(e))

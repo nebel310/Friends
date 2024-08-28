@@ -158,6 +158,208 @@ form p {
 }
 
 /* Profile page styles */
+.profile-info, .invite-form, .invitations, .couples {
+    background-color: #1e3799;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.profile-info {
+    text-align: left;
+}
+
+.invite-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.invite-form input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.logout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #eb2f06;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.logout-button:hover {
+    background-color: #ff6b6b;
+}
+body {
+    background-color: #0a3d62;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+}
+
+
+.centered-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.names {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 16pt;
+    color: #ffffff;
+}
+
+.names p {
+    margin: 0;
+}
+
+.center-block {
+    background-color: #1e3799;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 400px;
+}
+
+h1 {
+    font-size: 50pt;
+    margin-top: 0;
+}
+
+p {
+    font-size: 25pt;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+button {
+    background-color: #38ada9;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #079992;
+}
+
+.exit-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #eb2f06;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.exit-button:hover {
+    background-color: #ff6b6b;
+}
+
+.button-access {
+    background-color: #0cb700;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button-access:hover {
+    background-color: #0a8f00;
+}
+
+.button-cancle {
+    background-color: #d30000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button-cancle:hover {
+    background-color: #ac0000;
+}
+
+a {
+    color: #38ada9;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #079992;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form p {
+    margin-top: 20px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.button {
+    background-color: #38ada9;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: #079992;
+}
+
+/* Profile page styles */
 .profile-info, .invite-form, .invitations {
     background-color: #1e3799;
     padding: 20px;
@@ -199,4 +401,89 @@ form p {
 
 .logout-button:hover {
     background-color: #ff6b6b;
+}
+
+/* GAME */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #ffffff;
+}
+
+.task-list li {
+    margin-bottom: 5px;
+}
+
+.profile-button {
+    background-color: #38ada9;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.profile-button:hover {
+    background-color: #079992;
+}
+
+.content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 1;
+    margin-top: 40px;
+}
+
+.task-form {
+    background-color: #1e3799;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 45%;
+}
+
+.task-form textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 10px;
+    resize: none;
+}
+
+.task-form button {
+    width: 100%;
+}
+
+.task-display {
+    background-color: #1e3799;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 45%;
+    color: #ffffff;
+}
+
+.task-display p {
+    margin: 0;
+    font-size: 20pt;
 }

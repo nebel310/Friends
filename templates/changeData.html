@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изменение данных</title>
+    <link type='text/css' href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet" />
+</head>
+<body>
+    <div class="centered-content">
+        <div class="center-block">
+            <h1>Изменение данных</h1>
+            {% for cat, msg in get_flashed_messages(True) %}
+            <div class="flash {{cat}}">{{msg}}</div>
+            {% endfor %}
+            <form action="#" method="post">
+                <label for="email">Новая почта</label>
+                <input type="email" id="email" name="email" required>
+                <label for="username">Новое Имя</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Новый пароль</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Готово</button>
+            </form>
+            <p>Передумали? <a href="{{ url_for('profile') }}">В профиль!</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -92,15 +92,6 @@ def index():
     return render_template('index.html', title='Вход')
 
 
-@app.route('/game', methods=['GET', 'POST'])
-@login_required
-def game():
-    activity = None
-    if request.method == 'POST':
-        activity = rn.choice(Activities)
-    return render_template('game.html', title='Friends', activity=activity)
-
-
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
@@ -169,16 +160,28 @@ def profile():
                 if dbase.getRequestByID(request_id) != False:
                     user1 = dbase.getRequestByID(request_id)[1]
                     user2 = dbase.getRequestByID(request_id)[2]
+                    name1 = list(dbase.getUser(user1))[1]
+                    name2 = list(dbase.getUser(user2))[1]
 
-                    dbase.addCouple(user1, user2)
+                    dbase.addCouple(user1, user2, name1, name2)
                     dbase.delRequest(request_id)
             elif interract_type == 'decline':
                 dbase.delRequest(request_id)
     
-    requests = dbase.getRequest(user_id)   
+    requests = dbase.getRequest(user_id)
+    couples = dbase.getCouple(user_id)
 
     
-    return render_template('profile.html', username=user_name, email=email, user_id=user_id, requests=requests)
+    return render_template('profile.html', username=user_name, email=email, user_id=user_id, requests=requests, couples=couples)
+
+
+@app.route('/game', methods=['GET', 'POST'])
+@login_required
+def game():
+    activity = None
+    if request.method == 'POST':
+        activity = rn.choice(Activities)
+    return render_template('game.html', title='Friends', activity=activity)
 
 
 @app.errorhandler(404)

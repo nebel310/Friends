@@ -3,25 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Микросайт</title>
+    <title>Игра</title>
     <link type='text/css' href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet" />
 </head>
 <body>
-    <div class="names">
-        <p>1. maxim54772churaev</p>
-        <p>2. Noscopeeeeee</p>
-    </div>
-    <div class="centered-content">
-        <div class="center-block">
-            <h1>Задание:</h1>
-            {% if activity %}
-            <p style="color: gold;">{{ activity }}</p>
-            {% endif %}
-            <form method="post">
-                <button type="submit" id="done-button">Сделано</button>
-            </form>
+    <div class="container">
+        <div class="top-section">
+            <ul class="task-list">
+                <li>1. Имя пользователя</li>
+                <li>2. Имя пользователя</li>
+            </ul>
+            <button href="profile.html">В профиль</button>
+        </div>
+        <div class="content">
+            <div class="task-form">
+                <h2>Ваше задание</h2>
+                <form method="post">
+                    <textarea placeholder="Введите текст задания..."></textarea>
+                    <button type="submit">Отправить</button>
+                </form>
+            </div>
+            <div class="task-display">
+                <h2>Выполнить</h2>
+                <p>Убраться в квартире</p>
+                <form method="post">
+                    <button type="submit">Сделано</button>
+                </form>
+            </div>
         </div>
     </div>
-    <a href="{{ url_for('logout') }}" class="exit-button">Выход</a>
 </body>
 </html>
