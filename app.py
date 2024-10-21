@@ -154,10 +154,7 @@ def profile():
 @app.route('/game', methods=['GET', 'POST'])
 @login_required
 def game():
-    activity = None
-    if request.method == 'POST':
-        activity = rn.choice(Activities)
-    return render_template('game.html', title='Friends', activity=activity)
+    return render_template('game.html', title='Friends')
 
 
 @app.errorhandler(404)
