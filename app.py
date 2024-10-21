@@ -151,9 +151,9 @@ def profile():
     return render_template('profile.html', username=user_name, email=email, user_id=user_id, requests=requests, couples=couples)
 
 
-@app.route('/game', methods=['GET', 'POST'])
+@app.route('/game/<int:couple_id>', methods=['GET', 'POST'])
 @login_required
-def game():
+def game(couple_id):
     return render_template('game.html', title='Friends')
 
 
@@ -163,4 +163,5 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
+    create_db() #Временное решение для ускорения разработки
     app.run(debug=True)

@@ -52,7 +52,7 @@
             <form method="post" style="display: grid;">
                 <p>
                     {{ couple[3] }} - {{ couple[4] }}
-                    <button href="{{ url_for('game') }}">Играть</button>
+                    <button href="{{ url_for('game', couple_id =couple[0]) }}">Играть</button>
                     <button type="submit" class="button-cancle" name="couple_interract" value="delete_{{ couple[0] }}">Удалить пару</button>
                 </p>
             </form>
