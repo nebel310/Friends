@@ -147,3 +147,29 @@ class DataBase:
             return res
         except sqlite3.Error as e:
             print('Ошибка в getCouple'+str(e))
+    
+    def getCoupleByID(self, couple_id):
+        try:
+            self.__cur.execute(f'SELECT * FROM couples WHERE id = {couple_id}')
+            res = self.__cur.fetchone()
+            if not res:
+                print('Пара не найдена getCoupleByID')
+                return False
+            
+            return res
+        except sqlite3.Error as e:
+            print('Ошибка в получении пары getCoupleByID'+str(e))
+    
+    def delCouple(self, couple_id):
+        try:
+            self.__cur.execute(f'SELECT COUNT() as "count" FROM couples WHERE id = {couple_id}')
+            res = self.__cur.fetchone()
+            if res['count'] == 0:
+                print('Пары с таким ID не существует')
+                return False
+            
+            self.__cur.execute(f'DELETE FROM couples WHERE id = {couple_id}')
+            self.__db.commit()
+            print(f'Пара с ID: {couple_id} успешно удалена')
+        except sqlite3.Error as e:
+            print('Ошибка в удалении пары'+str(e))

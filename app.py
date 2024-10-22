@@ -143,7 +143,18 @@ def profile():
                     dbase.delRequest(request_id)
             elif interract_type == 'decline':
                 dbase.delRequest(request_id)
-    
+        
+        elif 'couple_interract' in request.form:
+            couple_interract = request.form.get('couple_interract')
+            interract_type, couple_id = couple_interract.split('_')
+            couple_id = int(couple_id)
+
+            if interract_type == 'play':
+                if dbase.getCoupleByID(couple_id) != False:
+                    print('СРАБОТАЛО')
+                    return redirect(url_for('game', couple_id=couple_id))
+            elif interract_type == 'delete':
+                dbase.delCouple(couple_id)   
     requests = dbase.getRequest(user_id)
     couples = dbase.getCouple(user_id)
 
