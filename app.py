@@ -154,10 +154,11 @@ def profile():
                     print('СРАБОТАЛО')
                     return redirect(url_for('game', couple_id=couple_id))
             elif interract_type == 'delete':
-                dbase.delCouple(couple_id)   
+                dbase.delCouple(couple_id)
+
+   
     requests = dbase.getRequest(user_id)
     couples = dbase.getCouple(user_id)
-
     
     return render_template('profile.html', username=user_name, email=email, user_id=user_id, requests=requests, couples=couples)
 
@@ -165,7 +166,9 @@ def profile():
 @app.route('/game/<int:couple_id>', methods=['GET', 'POST'])
 @login_required
 def game(couple_id):
-    return render_template('game.html', title='Friends')
+    
+    couple = dbase.getCoupleByID(couple_id)
+    return render_template('game.html', title='Friends', couple=couple)
 
 
 @app.errorhandler(404)

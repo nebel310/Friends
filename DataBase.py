@@ -128,7 +128,7 @@ class DataBase:
             
             
             tm = math.floor(time.time())
-            self.__cur.execute('INSERT INTO couples VALUES(NULL, ?, ?, ?, ?, ?)', (user1, user2, name1, name2, tm))
+            self.__cur.execute('INSERT INTO couples VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)', (user1, user2, name1, name2, "Заданий нет", "Заданий нет", tm))
             self.__db.commit()
         except sqlite3.Error as e:
             print('Ошибка создания пары'+str(e))
@@ -173,3 +173,12 @@ class DataBase:
             print(f'Пара с ID: {couple_id} успешно удалена')
         except sqlite3.Error as e:
             print('Ошибка в удалении пары'+str(e))
+    
+    def updateCouple(self, couple_id, task_to1, task_to2):
+        try:
+            self.__cur.execute('UPDATE couples SET task_to1 = ?, task_to2 = ? WHERE id = ?', (task_to1, task_to2, couple_id))
+            self.__db.commit()
+            return True
+        except sqlite3.Error as e:
+            print('Ошибка обновления задания: ' + str(e))
+            return False
