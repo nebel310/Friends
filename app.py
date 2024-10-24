@@ -151,7 +151,6 @@ def profile():
 
             if interract_type == 'play':
                 if dbase.getCoupleByID(couple_id) != False:
-                    print('СРАБОТАЛО')
                     return redirect(url_for('game', couple_id=couple_id))
             elif interract_type == 'delete':
                 dbase.delCouple(couple_id)
@@ -166,9 +165,43 @@ def profile():
 @app.route('/game/<int:couple_id>', methods=['GET', 'POST'])
 @login_required
 def game(couple_id):
+    user_id = current_user.get_id()
+    user1 = dbase.getCoupleByID(couple_id)[1]
+    user2 = dbase.getCoupleByID(couple_id)[2]
+
+    task_to1 = dbase.getCoupleByID(couple_id)[5]
+    task_to2 = dbase.getCoupleByID(couple_id)[6]
+    print(f'task_to1: {task_to1} task_to2: {task_to2}')
     
+    #Логика если текущий юзер - user1
+    if user_id == user1:
+        current_task = dbase.getCoupleByID(couple_id)[5]
+        if request.method == 'POST':
+            if 'done' in request.form:
+                dbase.updateCouple(couple_id, 'Заданий нет', task_to2)
+            
+            elif 'send' in request.form:
+                task_to2 = request.form['textarea']
+                dbase.updateCouple(couple_id, task_to1, task_to2)
+                return redirect(url_for('game', couple_id=couple_id))
+    
+    #Лоигка если текущий юзер - user2
+    elif user_id == user2:
+        current_task = dbase.getCoupleByID(couple_id)[6]
+        if request.method == 'POST':
+            if 'done' in request.form:
+                dbase.updateCouple(couple_id, task_to1, "Заданий нет")
+            
+            elif 'send' in request.form:
+                task_to1 = request.form['textarea']
+                dbase.updateCouple(couple_id, task_to1, task_to2)
+                return redirect(url_for('game', couple_id=couple_id))
+    else:
+        return redirect(url_for('profile'))
+
+
     couple = dbase.getCoupleByID(couple_id)
-    return render_template('game.html', title='Friends', couple=couple)
+    return render_template('game.html', title='Friends', couple=couple, current_task=current_task)
 
 
 @app.errorhandler(404)

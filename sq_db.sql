@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS couples (
     user2 text NOT NULL,
     name1 text NOT NULL,
     name2 text NOT NULL,
-    task_to1 text NOT NULL DEFAULT "Заданий нет",
-    task_to2 text NOT NULL DEFAULT "Заданий нет",
+    task_to1 text NOT NULL,
+    task_to2 text NOT NULL,
     time integer NOT NULL
 );

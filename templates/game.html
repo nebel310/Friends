@@ -17,17 +17,17 @@
         </div>
         <div class="content">
             <div class="task-form">
-                <h2>Ваше задание</h2>
+                <h2>Отправьте задание другу</h2>
                 <form method="post">
-                    <textarea placeholder="Введите текст задания..."></textarea>
-                    <button type="submit">Отправить</button>
+                    <textarea name="textarea" placeholder="Введите текст задания..."></textarea>
+                    <button type="submit" name="send">Отправить</button>
                 </form>
             </div>
             <div class="task-display">
                 <h2>Выполнить</h2>
-                <p>Убраться в квартире</p>
+                <p>{{ current_task }}</p>
                 <form method="post">
-                    <button type="submit">Сделано</button>
+                    <button type="submit" name="done">Сделано</button>
                 </form>
             </div>
         </div>
