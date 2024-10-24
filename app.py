@@ -179,6 +179,7 @@ def game(couple_id):
         if request.method == 'POST':
             if 'done' in request.form:
                 dbase.updateCouple(couple_id, 'Заданий нет', task_to2)
+                return redirect(url_for('game', couple_id=couple_id))
             
             elif 'send' in request.form:
                 task_to2 = request.form['textarea']
@@ -191,6 +192,7 @@ def game(couple_id):
         if request.method == 'POST':
             if 'done' in request.form:
                 dbase.updateCouple(couple_id, task_to1, "Заданий нет")
+                return redirect(url_for('game', couple_id=couple_id))
             
             elif 'send' in request.form:
                 task_to1 = request.form['textarea']
